@@ -1,0 +1,22 @@
+name: Sync to Hugging Face hub
+on:
+  push:
+    branches: [main]
+
+  workflow_dispatch:
+
+jobs:
+  sync-to-hub:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3.5.3
+        with:
+          fetch-depth: 0
+      - name: Add remote
+        env:
+          HF: ${{  secrets.HF  }}
+        run: git remote add space https://thevivotran:$HF@huggingface.co/spaces/thevivotran/mlops_section2_week1
+      - name: Push to hub
+        env:
+          HF: ${{  secrets.HF  }}
+        run: git push --force https://thevivotran:$HF@huggingface.co/spaces/thevivotran/mlops_section2_week1 main
