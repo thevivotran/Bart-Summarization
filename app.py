@@ -1,10 +1,10 @@
 from transformers import pipeline
 import gradio as gr
 
-model = pipeline("summarization")
+model = pipeline("summarization", model="facebook/bart-large-cnn")
 
 def predict(prompt):
-    summary = model(prompt)[0]["summary_text"]
+    summary = model(prompt, max_length=130, min_length=30)[0]["summary_text"]
     return summary
 
 with gr.Blocks() as demo:
